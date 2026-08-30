@@ -1,0 +1,2 @@
+packages/models/zipvoice/decoder.int8.onnx filter=lfs diff=lfs merge=lfs -text
+packages/models/zipvoice/vocos_24khz.onnx filter=lfs diff=lfs merge=lfs -text

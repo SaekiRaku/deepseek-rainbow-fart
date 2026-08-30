@@ -1,0 +1,62 @@
+# ===== Dependencies =====
+node_modules/
+.dsh-bundle/
+.dsh-bundle.tgz
+
+# ===== Build output =====
+# esbuild 产物（`bun run build` 生成，含 sourcemap）
+packages/*/lib/
+dist/
+build/
+*.tsbuildinfo
+
+# ===== Logs =====
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-debug.log*
+lerna-debug.log*
+
+# ===== Environment =====
+.env
+.env.*
+!.env.example
+!.env.example.*
+
+# ===== OS =====
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ===== Editors / IDE =====
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.history/
+
+# ===== Tests / Coverage =====
+coverage/
+.nyc_output/
+.cache/
+*.lcov
+
+# ===== Package tarballs =====
+*.tgz
+*.tar.gz
+*.tar
+
+# ============================================================
+# 说明：packages/models/ 下的 .onnx / .wav / tokens.txt 等离线模型
+# 是插件内置分发包内容，**故意纳入版本控制**，不要在此忽略。
+# ============================================================
+
+.superpowers/
+docs/tests/screenshots/

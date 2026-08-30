@@ -1,0 +1,18 @@
+{
+  "name": "@deepseek-rainbow-fart/models",
+  "version": "0.1.0",
+  "description": "Offline bundled sherpa-onnx models & built-in reference voice for deepseek-rainbow-fart (ZipVoice zh-en voice cloning)",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./zipvoice/*": "./zipvoice/*",
+    "./built-in-voices/*": "./built-in-voices/*"
+  },
+  "files": [
+    "index.js",
+    "zipvoice",
+    "built-in-voices"
+  ],
+  "license": "MIT"
+}

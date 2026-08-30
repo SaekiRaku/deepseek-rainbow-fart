@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light" data-theme-preference="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="DeepSeek Rainbow Fart 安装、配置、音色包制作与开发指南。">
+  <title>使用文档 · DeepSeek Rainbow Fart</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌈</text></svg>">
+  <link rel="stylesheet" href="css/site.css">
+</head>
+<body class="docs-page">
+  <header class="site-header">
+    <div class="reading-progress" data-reading-progress aria-hidden="true"></div>
+    <div class="site-header__inner container">
+      <a class="site-brand" href="index.html" aria-label="DeepSeek Rainbow Fart 首页">
+        <span class="rainbow-mark" aria-hidden="true">🌈</span>
+        <span class="site-brand__name">DeepSeek Rainbow Fart</span>
+      </a>
+      <nav class="site-nav" aria-label="主导航" data-open="false">
+        <a href="index.html">首页</a>
+        <a href="guide.html" aria-current="page">文档</a>
+        <a href="https://github.com/SaekiRaku/deepseek-rainbow-fart" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="header-actions">
+        <button class="doc-menu-toggle" type="button" data-doc-menu aria-controls="doc-chapters" aria-expanded="false">章节</button>
+        <button class="icon-button" type="button" data-theme-toggle aria-label="切换主题" title="切换主题">
+          <svg class="theme-icon theme-icon__light" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.64 5.64l1.42 1.42M16.94 16.94l1.42 1.42M18.36 5.64l-1.42 1.42M7.06 16.94l-1.42 1.42"/><circle cx="12" cy="12" r="4"/></svg>
+          <svg class="theme-icon theme-icon__dark" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="theme-icon theme-icon__system" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" opacity=".4"/><circle cx="12" cy="12" r="4" fill="none"/></svg>
+        </button>
+        <button class="icon-button menu-toggle" type="button" data-menu-toggle aria-label="打开导航菜单" aria-expanded="false" title="打开导航菜单">
+          <svg class="menu-icon__open" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="menu-icon__close" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="doc-chapters-mobile" id="doc-chapters" aria-label="移动端文档目录" hidden>
+    <a href="#intro">简介</a><a href="#important">重要说明</a><a href="#prerequisites">前置要求</a>
+    <a href="#installation">安装方式</a><a href="#usage">使用方式</a><a href="#ui-configuration">界面配置</a>
+    <a href="#file-configuration">文件配置</a><a href="#voice-packs">音色包</a><a href="#publish-voice-packs">发布音色包</a>
+    <a href="#development">开发</a><a href="#uninstall">卸载</a><a href="#contributing">贡献</a><a href="#license">License</a>
+  </nav>
+
+  <main class="docs-main">
+    <div class="docs-layout container">
+      <aside class="docs-sidebar">
+        <p class="docs-sidebar__label">使用文档</p>
+        <nav aria-label="文档目录" data-scroll-spy>
+          <a href="#intro" aria-current="location">简介</a><a href="#important">重要说明</a><a href="#prerequisites">前置要求</a>
+          <a href="#installation">安装方式</a><a href="#usage">使用方式</a><a href="#ui-configuration">界面配置</a>
+          <a href="#file-configuration">文件配置</a><a href="#voice-packs">音色包</a><a href="#publish-voice-packs">发布音色包</a>
+          <a href="#development">开发</a><a href="#uninstall">卸载</a><a href="#contributing">贡献</a><a href="#license">License</a>
+        </nav>
+      </aside>
+
+      <article class="docs-content">
+        <section id="intro" data-doc-section>
+          <p class="docs-eyebrow">DeepSeek Harness Plugin · Guide</p>
+          <h1>每次和 AI 对话，为你播放一句专属的夸赞语音。</h1>
+          <p class="docs-lede">DeepSeek Rainbow Fart 会在每次 AI 对话后，为你播放一句专属的夸赞语音。夸赞由模型生成、仅使用本轮输入，语音通过本地离线 TTS 合成并播放。本文档覆盖安装、使用、真实运行时配置和音色包格式。</p>
+          <aside class="doc-signoff">作者正在独立开发创业，欢迎试用其他产品：<a href="https://news.qiapp.cc/" target="_blank" rel="noopener">news.qiapp.cc</a></aside>
+          <aside class="doc-credits">
+            <div class="doc-credits__item">
+              <span class="doc-credits__mark" aria-hidden="true">🌈</span>
+              <div class="doc-credits__body">
+                <p class="doc-credits__label">CREDITS · 致谢</p>
+                <p>感谢 <a href="https://github.com/JustKowalski" target="_blank" rel="noopener">@JustKowalski</a> 提供 TTS 技术指导与内置音色。</p>
+              </div>
+            </div>
+            <div class="doc-credits__item">
+              <span class="doc-credits__mark" aria-hidden="true">💻</span>
+              <div class="doc-credits__body">
+                <p class="doc-credits__label">SALUTE · 致敬</p>
+                <p>向仍在手写代码的程序员致敬；你可能也会对 <a href="https://github.com/SaekiRaku/vscode-rainbow-fart" target="_blank" rel="noopener">vscode-rainbow-fart</a> 感兴趣。</p>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section id="important" data-doc-section>
+          <h2>重要说明</h2>
+          <aside class="doc-notice">
+            <strong>使用前了解</strong>
+            <ul><li>生成夸赞会少量消耗当前模型供应商的 Token。</li><li>TTS 在本地离线合成，设备性能会影响等待时间。</li><li>安装流程以简单可靠为优先，并不代表所有技术选型都是性能最优解。</li></ul>
+          </aside>
+        </section>
+
+        <section id="prerequisites" data-doc-section>
+          <h2>前置要求</h2>
+          <ol><li>安装 DeepSeek Harness，并至少运行过一次 <code>npx @deepseek-ai/dsh web</code>。</li><li>从该地址下载并解压插件：<a href="https://pan.baidu.com/s/5eHUyVV7OZuE_iICCpr1Qnw#list/path=%2Fdeepseek-rainbow-fart" target="_blank" rel="noopener">百度网盘</a>。</li></ol>
+        </section>
+
+        <section id="installation" data-doc-section>
+          <h2>安装方式</h2>
+          <p>进入解压目录，用 Node 执行标准 dsh bundle 安装。安装器默认使用 <code>~/.dsh</code>；也可显式传入其他 Harness 主目录。</p>
+          <div class="code-block"><div class="code-block__bar"><span>Terminal</span><button type="button" data-copy-code aria-label="复制安装命令"><span data-copy-status>复制</span></button></div><pre><code>cd deepseek-rainbow-fart
+node install.js
+
+# 指定其他 Harness 主目录
+node install.js &lt;DSH_HOME&gt;</code></pre></div>
+          <p>若 <code>profiles/web</code> 尚未初始化，请先运行一次 <code>npx @deepseek-ai/dsh web</code>。插件注册由 bundle 的 <code>dsh.bundle</code> manifest 管理，无需手动编辑 <code>cordis.patch.yml</code>。</p>
+        </section>
+
+        <section id="usage" data-doc-section>
+          <h2>使用方式</h2>
+          <ol class="doc-steps"><li><strong>启动 Harness</strong><code>npx @deepseek-ai/dsh web</code>，然后点击页面任意位置以激活浏览器音频播放权限。</li><li><strong>开始聊天</strong>确认设备音量后发送消息，例如“天空为什么是蓝色的？”。</li><li><strong>播放语音</strong>整轮回复结束后，聊天中会出现 Rainbow Fart 语音条并自动播放，可暂停、调整进度和重播。</li></ol>
+          <aside class="doc-notice doc-notice--neutral">语音资源只保留在当前 Harness 进程中。刷新页面后仍可重播；重启 Harness 后，历史语音条会显示语音已失效。</aside>
+        </section>
+
+        <section id="ui-configuration" data-doc-section>
+          <h2>在 Harness 中配置</h2>
+          <p>打开会话内的 <strong>Rainbow Fart</strong> 页签。修改会自动保存，主要控制项如下。</p>
+          <div class="command-table" role="region" aria-label="界面配置项" tabindex="0"><table><thead><tr><th>配置项</th><th>作用</th></tr></thead><tbody><tr><td>启用状态</td><td>打开或暂停插件。</td></tr><tr><td>播放模式</td><td><code>web-audio</code> 在浏览器播放；<code>local</code> 使用本机播放器。</td></tr><tr><td>生成模型</td><td>指定供应商和模型；留空则继承当前会话模型。</td></tr><tr><td>语言与提示词</td><td>控制生成文案的语言和语气。</td></tr><tr><td>音色与速度</td><td>选择当前音色，并设置该音色独立的速度覆盖值。</td></tr><tr><td>音色管理</td><td>创建、导入、编辑、试听、测试合成、导出和删除非内置音色。</td></tr></tbody></table></div>
+        </section>
+
+        <section id="file-configuration" data-doc-section>
+          <h2>配置文件</h2>
+          <p>配置保存在 <code>$DSH_HOME/rainbow-fart.json</code>。未设置 <code>DSH_HOME</code> 时，实际路径为 <code>~/.dsh/rainbow-fart.json</code>。</p>
+          <div class="code-block"><div class="code-block__bar"><span>rainbow-fart.json</span><button type="button" data-copy-code aria-label="复制配置示例"><span data-copy-status>复制</span></button></div><pre><code>{
+  "enabled": true,
+  "generationModel": null,
+  "playbackMode": "web-audio",
+  "language": "zh",
+  "prompt": "针对用户的输入内容，构思一句俏皮的夸赞话语。${voice_prompts}",
+  "voiceSpeeds": { "cyy": 1 },
+  "voiceId": "cyy"
+}</code></pre></div>
+          <div class="command-table" role="region" aria-label="配置文件字段" tabindex="0"><table><thead><tr><th>字段</th><th>类型与行为</th></tr></thead><tbody><tr><td><code>enabled</code></td><td><code>boolean</code>，是否启用。</td></tr><tr><td><code>generationModel</code></td><td><code>{ provider, model } | null</code>；<code>null</code> 继承当前会话模型。</td></tr><tr><td><code>playbackMode</code></td><td><code>"web-audio" | "local"</code>。</td></tr><tr><td><code>language</code></td><td>生成语言字符串。</td></tr><tr><td><code>prompt</code></td><td>生成提示词，支持 <code>${voice_prompts}</code>。</td></tr><tr><td><code>voiceSpeeds</code></td><td>音色 ID 到速度的映射；<code>null</code> 表示恢复音色包默认值。</td></tr><tr><td><code>voiceId</code></td><td>当前音色 ID，默认 <code>cyy</code>。</td></tr></tbody></table></div>
+          <p><code>${voice_prompts}</code> 会替换为当前音色包的可选提示词，未提供时替换为空字符串。生成仅使用本轮用户输入，不保留聊天历史；超过 2000 个字符的输入会被截断。</p>
+        </section>
+
+        <section id="voice-packs" data-doc-section>
+          <h2>音色包</h2>
+          <p>音色安装在 <code>$DSH_HOME/rainbow-fart-voices/&lt;voice-id&gt;/</code>。推荐直接在 Harness 界面中创建音色；也可以手动组装 ZIP 后导入，或导入他人发布的音色包。</p>
+
+          <h3>方式一：界面创建（推荐）</h3>
+          <ol class="doc-steps"><li><strong>上传参考音频</strong>打开会话内的 <strong>Rainbow Fart</strong> 页签，在音色管理中选择「创建音色」，上传 PCM WAV（单声道 16-bit）参考音频。</li><li><strong>填写音频对应文字</strong>必填，内容必须与参考音频朗读的文字完全一致。</li><li><strong>完善信息</strong>按需调整默认语速，填写名称、描述、性别、语言与音色提示词等可选字段。</li><li><strong>测试并创建</strong>点击「测试合成」试听效果，确认后点击「创建」。</li></ol>
+          <figure class="doc-figure">
+            <img src="assets/voice-create-dialog.png" alt="Harness 界面中的「创建音色」对话框：上传参考音频、填写音频对应文字、调整语速并测试合成" loading="lazy" width="500" height="829">
+            <figcaption>Harness 会话内「创建音色」对话框</figcaption>
+          </figure>
+
+          <h3>方式二：ZIP 音色包</h3>
+          <div class="file-tree" aria-label="音色包文件结构"><code>voice-pack.zip/
+├── meta.json
+├── sample.wav
+└── avatar.png <span># 可选</span>
+
+voice-pack.zip/ <span># 或所有文件整体包裹在同一层文件夹下</span>
+└── my-voice/
+    ├── meta.json
+    ├── sample.wav
+    └── avatar.png <span># 可选</span></code></div>
+          <aside class="doc-notice"><strong>ZIP 结构要求：</strong>所有文件要么直接平铺在 ZIP 根目录，要么全部位于 ZIP 内同一个顶层文件夹下（导入时会自动读取该文件夹内的内容）。不支持更深层的嵌套子目录。</aside>
+          <div class="code-block"><div class="code-block__bar"><span>meta.json</span><button type="button" data-copy-code aria-label="复制音色包配置示例"><span data-copy-status>复制</span></button></div><pre><code>{
+  "meta": {
+    "name": "示例音色",
+    "gender": "女",
+    "language": "中文",
+    "text": "这段文字必须与参考音频内容一致。",
+    "audio": "sample.wav",
+    "speed": 1,
+    "avatar": "avatar.png",
+    "prompts": "用热情、俏皮的朋友语气夸奖用户"
+  },
+  "description": "音色作者、授权和适用场景说明"
+}</code></pre></div>
+          <p><code>meta.text</code> 和 <code>meta.audio</code> 必填，且文字必须与参考音频内容完全一致。<code>name</code>、<code>gender</code>、<code>language</code>、<code>speed</code>、<code>avatar</code>、<code>prompts</code> 与顶层 <code>description</code> 可选。</p>
+          <ul class="limit-grid"><li><strong>50 MB</strong>ZIP 最大体积</li><li><strong>20 MB</strong>音频最大体积</li><li><strong>64</strong>ZIP 最多条目数</li><li><strong>单声道 16-bit</strong>UI 参考音频须为 PCM WAV</li><li><strong>0.5 - 1.5</strong>支持的音色速度范围</li></ul>
+        </section>
+
+        <section id="publish-voice-packs" data-doc-section>
+          <h2>发布音色包</h2>
+          <ol class="publish-steps"><li><span>01</span><div><strong>准备 ZIP</strong><p>从界面导出，或按上述格式组装并验证有效音色包。</p></div></li><li><span>02</span><div><strong>建立公开仓库</strong><p>提供试听预览、作者署名和明确的资源许可证。</p></div></li><li><span>03</span><div><strong>添加 Topic</strong>            <p>在 GitHub 仓库设置中添加 <code>deepseek-rainbow-fart</code> Topic。</p></div></li><li><span>04</span><div><strong>确认可发现</strong><p>访问 <a href="https://github.com/topics/deepseek-rainbow-fart" target="_blank" rel="noopener">https://github.com/topics/deepseek-rainbow-fart</a> 检查收录。</p></div></li></ol>
+        </section>
+
+        <section id="development" data-doc-section>
+          <h2>开发方式（bun）</h2>
+          <p>开发命令会构建 <code>packages/core</code> 的 Node 与 Client 两部分，生成本地标准 dsh bundle tarball，通过 <code>dsh plugin --profile web add</code> 安装，再启动 Web UI。修改源码后重新执行即可生效。</p>
+          <div class="code-block"><div class="code-block__bar"><span>Terminal</span><button type="button" data-copy-code aria-label="复制开发命令"><span data-copy-status>复制</span></button></div><pre><code>bun run dev
+# 或指定其他 profile
+bash scripts/dev.sh ~/.dsh/profiles/headless
+
+bun install        # 安装依赖并生成 bun.lock
+bun run build:core # 仅构建 core 包
+bun run build      # 当前平台快速打包
+bun run release    # 跨平台发布打包</code></pre></div>
+        </section>
+
+        <section id="uninstall" data-doc-section>
+          <h2>卸载方式</h2>
+          <p>在插件解压目录执行：</p>
+          <div class="code-block"><div class="code-block__bar"><span>Terminal</span><button type="button" data-copy-code aria-label="复制卸载命令"><span data-copy-status>复制</span></button></div><pre><code>node install.js --uninstall</code></pre></div>
+          <p>安装器会调用 <code>dsh plugin --profile web remove deepseek-rainbow-fart</code>，并移除 profile 中对应的 bundle 注册。不要手动编辑 <code>cordis.patch.yml</code>。</p>
+        </section>
+
+        <section id="contributing" data-doc-section>
+          <h2>贡献</h2>
+          <p>这是一个娱乐项目，Issue 与 Pull Request 会随缘处理。你可以 Fork 仓库并自行增加功能。</p>
+          <p>感谢 <a href="https://github.com/JustKowalski" target="_blank" rel="noopener">@JustKowalski</a> 提供 TTS 技术指导与内置音色。也向仍在手写代码的程序员致敬；你可能也会对 <a href="https://github.com/SaekiRaku/vscode-rainbow-fart" target="_blank" rel="noopener">vscode-rainbow-fart</a> 感兴趣。</p>
+        </section>
+
+        <section id="license" data-doc-section>
+          <h2>License</h2>
+          <p>项目基于 MIT 开源。仓库中的音频采样由真人录音；依照 MIT 被授权人义务，使用音频采样资源时必须标明资源作者、链接与许可。</p>
+          <p>内置音色 <code>cyy</code> 由 <a href="https://github.com/JustKowalski" target="_blank" rel="noopener">@JustKowalski</a> 提供。</p>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <div class="site-footer__brand">
+        <span class="rainbow-mark" aria-hidden="true">🌈</span>
+        <div>
+          <strong>DeepSeek Rainbow Fart</strong>
+          <p>每次和 AI 对话，为你播放一句专属的夸赞语音。</p>
+        </div>
+      </div>
+      <nav class="footer-links" aria-label="页脚导航">
+        <div class="footer-links__group">
+          <h4>站点</h4>
+          <a href="index.html">首页</a>
+          <a href="guide.html">使用文档</a>
+          <a href="#intro">返回顶部</a>
+        </div>
+        <div class="footer-links__group">
+          <h4>更多</h4>
+          <a href="https://github.com/SaekiRaku/deepseek-rainbow-fart" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://news.qiapp.cc/" target="_blank" rel="noopener">news.qiapp.cc</a>
+          <a href="#license">License</a>
+        </div>
+      </nav>
+      <div class="footer-qr">
+        <img src="assets/wechat-qrcode.jpg" alt="微信公众号「QIQI1996 APP」二维码，微信扫码关注" width="92" height="92" loading="lazy">
+        <p class="footer-qr__title">欢迎关注公众号</p>
+        <p class="footer-qr__name">QIQI1996 APP</p>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <div class="container">
+        <p>DeepSeek Rainbow Fart · MIT License</p>
+        <p>为 DeepSeek Harness 而生 · 开源 · 本地语音合成</p>
+      </div>
+    </div>
+  </footer>
+  <script defer src="js/site.js"></script>
+</body>
+</html>
