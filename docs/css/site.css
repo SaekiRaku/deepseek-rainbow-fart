@@ -761,6 +761,21 @@ main > section {
   line-height: 1;
 }
 
+.demo-audio-credit {
+  width: min(100%, 360px);
+  margin: 6px 0 0;
+  color: #646464;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.demo-audio-credit a {
+  color: #171717;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .demo-composer {
   display: flex;
   align-items: center;
@@ -787,31 +802,6 @@ main > section {
 
 .demo-video-state {
   min-height: 500px;
-}
-
-.demo-video-placeholder {
-  padding: 48px 24px;
-  text-align: center;
-}
-
-.demo-video-placeholder svg {
-  width: 54px;
-  margin: 70px auto 14px;
-}
-
-.demo-video-placeholder strong {
-  display: block;
-  font-size: 18px;
-}
-
-.demo-video-placeholder p {
-  margin: 4px 0 18px;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.demo-video-placeholder .button {
-  margin-inline: auto;
 }
 
 .demo-video-media {
@@ -1975,6 +1965,11 @@ main > section {
   .audio-play-button {
     width: 34px;
     height: 34px;
+  }
+
+  .demo-video-state,
+  .demo-video-media {
+    min-height: 210px;
   }
 
   .feature-intro {

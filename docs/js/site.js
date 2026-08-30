@@ -8,15 +8,12 @@
  * @property {DemoMode} mode
  * @property {AudioPlaybackState} audio
  * @property {MediaAvailability} audioAvailability
- * @property {MediaAvailability} videoAvailability
  */
 
 const THEME_KEY = "rainbow-fart-theme";
 
 const DEMO_MEDIA = {
   audio: "assets/demo-audio.wav",
-  video:
-    "https://saekiraku.oss-cn-beijing.aliyuncs.com/github/deepseek-rainbow-fart/deepseek-rainbow-fart-video.mp4",
 };
 
 /** @param {number} seconds @returns {string} */
@@ -34,7 +31,6 @@ function createDemoState() {
     mode: "conversation",
     audio: "idle",
     audioAvailability: "missing",
-    videoAvailability: "missing",
   };
 }
 
@@ -65,15 +61,14 @@ class DemoController {
     this.state = createDemoState();
     this.conversation = root.querySelector("[data-demo-conversation]");
     this.videoState = root.querySelector("[data-demo-video]");
-    this.videoPlaceholder = root.querySelector("[data-video-placeholder]");
     this.videoToggles = [...root.querySelectorAll("[data-video-toggle]")];
+    this.videoElement = root.querySelector(".demo-video-media");
     this.audioToggle = root.querySelector("[data-audio-toggle]");
     this.audioStatus = root.querySelector("[data-audio-status]");
     this.audioProgress = root.querySelector(".audio-progress i");
     this.audioTime = root.querySelector(".audio-time");
     this.audioDurationSet = false;
     this.audioElement = null;
-    this.videoElement = null;
     this.audioPlayGeneration = 0;
     this.pendingAudioPlayGeneration = null;
 
@@ -84,10 +79,7 @@ class DemoController {
 
     this.render();
     if (options.animate !== false) this.startIntro();
-    if (options.probeMedia !== false) {
-      void this.probeMedia("audio");
-      void this.probeMedia("video");
-    }
+    if (options.probeMedia !== false) void this.probeMedia("audio");
   }
 
   toggleVideo() {
@@ -95,33 +87,9 @@ class DemoController {
     if (mode === "video") {
       this.audioPlayGeneration += 1;
       this.audioElement?.pause();
-      // 探测在移动端可能长期 pending：借用户手势现场创建视频元素。
-      this.ensureVideoElement();
     }
     this.state = setDemoMode(this.state, mode);
     this.render();
-    if (mode === "video") this.attemptVideoPlay();
-  }
-
-  /** 仅在手势调用链内兜底创建视频元素（探测未完成或失败时）。 */
-  ensureVideoElement() {
-    if (this.videoElement || !this.videoState) return;
-    this.prepareVideo("available");
-    this.state = { ...this.state, videoAvailability: "available" };
-  }
-
-  attemptVideoPlay() {
-    if (!this.videoElement) return;
-    try {
-      const attempt = this.videoElement.play();
-      attempt?.catch(() => {
-        // 移动端可能拒绝自动播放：回退到占位符，避免黑屏。
-        this.state = { ...this.state, videoAvailability: "error" };
-        this.render();
-      });
-    } catch {
-      // Native playback can be rejected before returning a promise.
-    }
   }
 
   toggleAudio() {
@@ -176,18 +144,15 @@ class DemoController {
     );
   }
 
-  /** @param {"audio" | "video"} kind */
+  /** @param {"audio"} kind */
   probeMedia(kind) {
     const finish = (availability) => {
-      // 用户手势已兜底创建视频时，忽略迟到的"不可用"探测结果。
-      if (kind === "video" && availability === "missing" && this.videoElement) return;
       this.state = { ...this.state, [`${kind}Availability`]: availability };
       if (kind === "audio") this.prepareAudio(availability);
-      if (kind === "video") this.prepareVideo(availability);
       this.render();
     };
 
-    const element = document.createElement(kind === "audio" ? "audio" : "video");
+    const element = document.createElement("audio");
     element.preload = "metadata";
     element.muted = true;
     element.hidden = true;
@@ -274,27 +239,6 @@ class DemoController {
     }
   }
 
-  /** @param {MediaAvailability} availability */
-  prepareVideo(availability) {
-    if (this.videoElement) return;
-    if (availability !== "available" || !this.videoState) return;
-
-    const video = document.createElement("video");
-    video.className = "demo-video-media";
-    video.controls = true;
-    video.playsInline = true;
-    video.preload = "metadata";
-    video.src = DEMO_MEDIA.video;
-    video.addEventListener("error", () => {
-      video.remove();
-      this.videoElement = null;
-      this.state = { ...this.state, videoAvailability: "error" };
-      this.render();
-    });
-    this.videoState.prepend(video);
-    this.videoElement = video;
-  }
-
   render() {
     const videoMode = this.state.mode === "video";
     if (this.conversation) this.conversation.hidden = videoMode;
@@ -318,11 +262,6 @@ class DemoController {
       if (label) label.textContent = text;
       else toggle.textContent = text;
     });
-
-    if (this.videoPlaceholder) {
-      this.videoPlaceholder.hidden = this.state.videoAvailability === "available";
-    }
-    if (this.videoElement) this.videoElement.hidden = this.state.videoAvailability !== "available";
 
     const audioLabels = {
       idle: "离线语音",
