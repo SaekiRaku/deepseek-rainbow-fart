@@ -95,15 +95,32 @@ class DemoController {
     if (mode === "video") {
       this.audioPlayGeneration += 1;
       this.audioElement?.pause();
+      // 探测在移动端可能长期 pending：借用户手势现场创建视频元素。
+      this.ensureVideoElement();
     }
     this.state = setDemoMode(this.state, mode);
     this.render();
-    if (mode === "video" && this.videoElement) {
-      try {
-        void this.videoElement.play().catch(() => {});
-      } catch {
-        // Native playback can be rejected before returning a promise.
-      }
+    if (mode === "video") this.attemptVideoPlay();
+  }
+
+  /** 仅在手势调用链内兜底创建视频元素（探测未完成或失败时）。 */
+  ensureVideoElement() {
+    if (this.videoElement || !this.videoState) return;
+    this.prepareVideo("available");
+    this.state = { ...this.state, videoAvailability: "available" };
+  }
+
+  attemptVideoPlay() {
+    if (!this.videoElement) return;
+    try {
+      const attempt = this.videoElement.play();
+      attempt?.catch(() => {
+        // 移动端可能拒绝自动播放：回退到占位符，避免黑屏。
+        this.state = { ...this.state, videoAvailability: "error" };
+        this.render();
+      });
+    } catch {
+      // Native playback can be rejected before returning a promise.
     }
   }
 
@@ -162,6 +179,8 @@ class DemoController {
   /** @param {"audio" | "video"} kind */
   probeMedia(kind) {
     const finish = (availability) => {
+      // 用户手势已兜底创建视频时，忽略迟到的"不可用"探测结果。
+      if (kind === "video" && availability === "missing" && this.videoElement) return;
       this.state = { ...this.state, [`${kind}Availability`]: availability };
       if (kind === "audio") this.prepareAudio(availability);
       if (kind === "video") this.prepareVideo(availability);
@@ -169,12 +188,14 @@ class DemoController {
     };
 
     const element = document.createElement(kind === "audio" ? "audio" : "video");
-    element.preload = "auto";
+    element.preload = "metadata";
     element.muted = true;
+    element.hidden = true;
     let settled = false;
     const settle = (availability) => {
       if (settled) return;
       settled = true;
+      element.removeEventListener("loadedmetadata", onReady);
       element.removeEventListener("canplaythrough", onReady);
       element.removeEventListener("error", onError);
       element.remove();
@@ -182,8 +203,11 @@ class DemoController {
     };
     const onReady = () => settle("available");
     const onError = () => settle(element.error?.code === 3 ? "error" : "missing");
+    element.addEventListener("loadedmetadata", onReady);
     element.addEventListener("canplaythrough", onReady);
     element.addEventListener("error", onError);
+    // 移动端/弱网下事件可能长期不触发：超时放弃并清理探测元素。
+    window.setTimeout(() => settle("missing"), 10000);
     element.src = DEMO_MEDIA[kind];
     document.body?.append(element);
   }
@@ -252,6 +276,7 @@ class DemoController {
 
   /** @param {MediaAvailability} availability */
   prepareVideo(availability) {
+    if (this.videoElement) return;
     if (availability !== "available" || !this.videoState) return;
 
     const video = document.createElement("video");
